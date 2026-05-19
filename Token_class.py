@@ -19,6 +19,14 @@ class TokenType(Enum):
     POW = "POW"
     MODULUS = "MODULUS"
 
+    # identifiers
+    IDENTIFIER = "IDENTIFIER"
+    
+    PRINT = "PRINT"
+
+    # assignment
+    EQUAL = "EQUAL"
+
     #Symbols
 
     SEMICOLON = "SEMICOLON"

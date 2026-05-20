@@ -701,24 +701,6 @@ cd lime-compiler
 python main.py
 ```
 
-Execution pipeline is implemented in `main.py`. :contentReference[oaicite:14]{index=14}
-
----
-
-# Compiler Theory References
-
-The project implementation and concepts were inspired by:
-
-- Compiler Design Lecture Slides
-- Lexical Analysis & Finite Automata
-- Syntax Analysis & CFG
-- Lex & Yacc Guide
-
-References:  
-:contentReference[oaicite:15]{index=15}  
-:contentReference[oaicite:16]{index=16}  
-:contentReference[oaicite:17]{index=17}  
-:contentReference[oaicite:18]{index=18}
 
 ---
 

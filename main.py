@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     try:
 
-        with open("tests/lexer.lime", "r") as f:
+        with open("tests/lexer.kor", "r") as f:
             code = f.read()
 
         print("\nSource Code:\n")

@@ -1,4 +1,4 @@
-# Lime Compiler
+# KOR Compiler
 
 A mini compiler/interpreter project built using Python for Compiler Design coursework.
 
@@ -36,7 +36,7 @@ The project follows the standard compiler phases:
 # Project Structure
 
 ```bash
-LimeCompiler/
+KORCompiler/
 │
 ├── Lexer.py
 ├── Parser.py
@@ -50,7 +50,7 @@ LimeCompiler/
 ├── main.py
 │
 └── tests/
-    └── lexer.lime
+    └── lexer.kor
 ```
 
 ---
@@ -63,7 +63,7 @@ The lexical analyzer converts source code into tokens.
 
 Example:
 
-```lime
+```kor
 x = 10 + 20;
 ```
 
@@ -95,7 +95,7 @@ The parser validates grammar rules and builds an Abstract Syntax Tree (AST).
 
 Example:
 
-```lime
+```kor
 print(5 + 2 * 3);
 ```
 
@@ -117,7 +117,7 @@ Semantic analysis checks program meaning and variable validity.
 
 Example:
 
-```lime
+```kor
 print(z);
 ```
 
@@ -135,7 +135,7 @@ The compiler generates Three Address Code (TAC).
 
 Example:
 
-```lime
+```kor
 x = 5 + 5;
 ```
 
@@ -226,7 +226,7 @@ Supported operators:
 
 ## Variables
 
-```lime
+```kor
 x = 10;
 y = 20;
 
@@ -237,7 +237,7 @@ print(x + y);
 
 ## IF Statements
 
-```lime
+```kor
 if 1 then print(100);
 ```
 
@@ -245,7 +245,7 @@ if 1 then print(100);
 
 ## WHILE Loops
 
-```lime
+```kor
 while 3 do print(2 + 2);
 ```
 
@@ -253,7 +253,7 @@ while 3 do print(2 + 2);
 
 ## Arrays
 
-```lime
+```kor
 array nums = [1,2,3,4];
 ```
 
@@ -267,7 +267,7 @@ array nums = [1,2,3,4];
 
 ## Code
 
-```lime
+```kor
 print(5 + 5 * 2);
 ```
 
@@ -283,7 +283,7 @@ print(5 + 5 * 2);
 
 ## Code
 
-```lime
+```kor
 print((5 + 5) * 2 - 3 / 4 ^ 2 % 10);
 ```
 
@@ -299,7 +299,7 @@ print((5 + 5) * 2 - 3 / 4 ^ 2 % 10);
 
 ## Code
 
-```lime
+```kor
 x = 10;
 y = 20;
 
@@ -318,7 +318,7 @@ print(x + y);
 
 ## Code
 
-```lime
+```kor
 x = 5;
 
 y = x * 10;
@@ -338,7 +338,7 @@ print(y + x);
 
 ## Code
 
-```lime
+```kor
 if 1 then print(10 + 10);
 ```
 
@@ -354,7 +354,7 @@ if 1 then print(10 + 10);
 
 ## Code
 
-```lime
+```kor
 if 0 then print(999);
 ```
 
@@ -370,7 +370,7 @@ IF BODY SKIPPED
 
 ## Code
 
-```lime
+```kor
 while 3 do print(2 + 2);
 ```
 
@@ -388,7 +388,7 @@ while 3 do print(2 + 2);
 
 ## Code
 
-```lime
+```kor
 while 2 do while 3 do print(1 + 1);
 ```
 
@@ -409,7 +409,7 @@ while 2 do while 3 do print(1 + 1);
 
 ## Code
 
-```lime
+```kor
 array nums = [1,2,3,4];
 ```
 
@@ -425,7 +425,7 @@ ARRAY nums = [1, 2, 3, 4]
 
 ## Code
 
-```lime
+```kor
 x = 10;
 
 array vals = [x, x + 5, x * 2];
@@ -443,7 +443,7 @@ ARRAY vals = [10, 15, 20]
 
 ## Code
 
-```lime
+```kor
 print(2 ^ 8);
 ```
 
@@ -459,7 +459,7 @@ print(2 ^ 8);
 
 ## Code
 
-```lime
+```kor
 print(10 % 3);
 ```
 
@@ -475,7 +475,7 @@ print(10 % 3);
 
 ## Code
 
-```lime
+```kor
 x = 10;
 y = 5;
 
@@ -494,7 +494,7 @@ print((x + y) * 2 ^ 2 - 5 % 2);
 
 ## Code
 
-```lime
+```kor
 print(z);
 ```
 
@@ -510,7 +510,7 @@ Semantic Error: z is undefined.
 
 ## Code
 
-```lime
+```kor
 print(10 / 0);
 ```
 
@@ -526,7 +526,7 @@ Runtime Error: Division by zero.
 
 ## Code
 
-```lime
+```kor
 "hello";
 ```
 
@@ -542,7 +542,7 @@ Semantic Error: Strings are not allowed.
 
 ## Code
 
-```lime
+```kor
 x = 10;
 y = 5;
 
@@ -572,7 +572,7 @@ ARRAY nums = [1, 2, 3, 4]
 
 ## Source Code
 
-```lime
+```kor
 x = 10;
 y = 5;
 
@@ -663,8 +663,8 @@ OUT t2
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/lime-compiler.git
-cd lime-compiler
+git clone https://github.com/Miner-exe/lime.git
+cd lime
 ```
 
 ---
@@ -696,8 +696,3 @@ python main.py
 - Ahmed Sayed
 
 ---
-
-# Course
-
-Compiler Design Project  
-Faculty of Computer Science

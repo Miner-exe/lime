@@ -3,73 +3,127 @@ from Parser import Parser
 from Interpreter import Interpreter
 from Token_class import TokenType
 
+from TAC import TACGenerator
+from Optimizer import Optimizer
+from RegisterAllocator import RegisterAllocator
+from AssemblyGenerator import AssemblyGenerator
+
 
 if __name__ == "__main__":
 
-    with open("tests/lexer.lime", "r") as f:
-        code = f.read()
+    try:
 
-    # ==============================
-    # SOURCE CODE
-    # ==============================
+        with open("tests/lexer.lime", "r") as f:
+            code = f.read()
 
-    print("\nSource Code:\n")
+        print("\nSource Code:\n")
 
-    print(code)
+        print(code)
 
-    # ==============================
-    # LEXER
-    # ==============================
+        # =========================
+        # LEXER
+        # =========================
 
-    print("\nLexer:\n")
+        print("\nLexer:\n")
 
-    lexer = Lexer(code)
+        lexer = Lexer(code)
 
-    tokens = []
+        while True:
 
-    while True:
+            tok = lexer.next_token()
 
-        tok = lexer.next_token()
+            print(tok)
 
-        tokens.append(tok)
+            if tok.type == TokenType.EOF:
+                break
 
-        print(tok)
+        # =========================
+        # PARSER
+        # =========================
 
-        if tok.type == TokenType.EOF:
-            break
+        print("\nParser:\n")
 
-    # ==============================
-    # PARSER
-    # ==============================
+        lexer = Lexer(code)
 
-    print("\nParser:\n")
+        parser = Parser(lexer)
 
-    lexer = Lexer(code)
+        tree = parser.parse()
 
-    parser = Parser(lexer)
+        print(tree)
 
-    tree = parser.parse()
+        # =========================
+        # TAC
+        # =========================
 
-    print(tree)
+        print("\nThree Address Code:\n")
 
-    # ==============================
-    # INTERPRETER
-    # ==============================
+        tac = TACGenerator()
 
-    print("\nInterpreter:\n")
+        for stmt in tree:
+            tac.generate(stmt)
 
-    interpreter = Interpreter()
+        for line in tac.code:
+            print(line)
 
-    result = None
+        # =========================
+        # OPTIMIZER
+        # =========================
 
-    for stmt in tree:
+        print("\nOptimizer:\n")
 
-        result = interpreter.visit(stmt)
+        optimizer = Optimizer()
 
-    # ==============================
-    # FINAL RESULT
-    # ==============================
+        optimized = optimizer.optimize(tac.code)
 
-    print("\nFinal Result:\n")
+        for line in optimized:
+            print(line)
 
-    print(result)
+        # =========================
+        # REGISTER ALLOCATION
+        # =========================
+
+        print("\nRegister Allocation:\n")
+
+        allocator = RegisterAllocator()
+
+        allocated = allocator.allocate(optimized)
+
+        for line in allocated:
+            print(line)
+
+        # =========================
+        # ASSEMBLY
+        # =========================
+
+        print("\nAssembly Code:\n")
+
+        asm = AssemblyGenerator()
+
+        assembly = asm.generate(optimized)
+
+        for line in assembly:
+            print(line)
+
+        # =========================
+        # INTERPRETER
+        # =========================
+
+        print("\nInterpreter:\n")
+
+        interpreter = Interpreter()
+
+        result = None
+
+        for stmt in tree:
+
+            result = interpreter.visit(stmt)
+
+        print("\nFinal Result:\n")
+
+        print(result)
+
+    except Exception as e:
+
+        print("\n================ ERROR ================\n")
+
+        print(e)

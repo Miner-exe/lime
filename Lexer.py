@@ -3,7 +3,12 @@ from typing import Any
 
 
 KEYWORDS = {
-    "print": TokenType.PRINT
+    "print": TokenType.PRINT,
+    "if": TokenType.IF,
+    "then": TokenType.THEN,
+    "while": TokenType.WHILE,
+    "do": TokenType.DO,
+    "array": TokenType.ARRAY
 }
 
 
@@ -61,8 +66,6 @@ class Lexer:
 
     def __read_number(self) -> Token:
 
-        start_pos = self.position
-
         dot_count = 0
 
         output = ""
@@ -76,15 +79,7 @@ class Lexer:
         ):
 
             if self.current_char == ".":
-
                 dot_count += 1
-
-            if dot_count > 1:
-
-                return self.__new_token(
-                    TokenType.ILLEGAL,
-                    self.source[start_pos:self.position]
-                )
 
             output += self.current_char
 
@@ -118,7 +113,6 @@ class Lexer:
 
             self.__read_char()
 
-        # keyword check
         if output in KEYWORDS:
 
             return self.__new_token(
@@ -168,6 +162,20 @@ class Lexer:
 
             case ')':
                 tok = self.__new_token(TokenType.RPAREN, ')')
+
+            case '[':
+                tok = self.__new_token(TokenType.LBRACKET, '[')
+
+            case ']':
+                tok = self.__new_token(TokenType.RBRACKET, ']')
+
+            case ',':
+                tok = self.__new_token(TokenType.COMMA, ',')
+
+            case '"':
+                raise Exception(
+                    "Semantic Error: Strings are not allowed."
+                )
 
             case None:
                 tok = self.__new_token(TokenType.EOF, "")

@@ -1,47 +1,65 @@
 from enum import Enum
-from typing import Any
+
 
 class TokenType(Enum):
-    #special tokens
-    EOF = "EOF"
-    ILLEGAL = "ILLEGAL"
 
-    #data types
- 
+    ILLEGAL = "ILLEGAL"
+    EOF = "EOF"
+
     INT = "INT"
     FLOAT = "FLOAT"
 
-    #arithmatic symbols
-    PLUS = "PLUS"
-    MINUS = "MINUS"
-    ASTERIK = "ASTERIK"
-    SLASH = "SLASH"
-    POW = "POW"
-    MODULUS = "MODULUS"
-
-    # identifiers
     IDENTIFIER = "IDENTIFIER"
-    
+
+    PLUS = "+"
+    MINUS = "-"
+    ASTERIK = "*"
+    SLASH = "/"
+    POW = "^"
+    MODULUS = "%"
+
+    EQUAL = "="
+
+    LPAREN = "("
+    RPAREN = ")"
+
+    LBRACKET = "["
+    RBRACKET = "]"
+
+    COMMA = ","
+
+    SEMICOLON = ";"
+
     PRINT = "PRINT"
 
-    # assignment
-    EQUAL = "EQUAL"
+    IF = "IF"
+    THEN = "THEN"
 
-    #Symbols
+    WHILE = "WHILE"
+    DO = "DO"
 
-    SEMICOLON = "SEMICOLON"
-    LPAREN = "LPAREN"
-    RPAREN = "RPAREN"
+    ARRAY = "ARRAY"
+
 
 class Token:
-    def __init__(self, type: TokenType, literal: Any, line_no: int, position: int) -> None:
+
+    def __init__(
+        self,
+        type: TokenType,
+        literal,
+        line_no,
+        position
+    ):
+
         self.type = type
         self.literal = literal
         self.line_no = line_no
         self.position = position
 
-    def __str__(self) -> str:
-        return f"token[{self.type} : {self.literal} : Line {self.line_no} : Postition {self.position}]"
-           
-    def __repr__(self) -> str:
-        return str(self)
+    def __repr__(self):
+
+        return (
+            f"token[{self.type} : "
+            f"{self.literal} : "
+            f"Line {self.line_no}]"
+        )

@@ -4,6 +4,7 @@ class NumberNode:
         self.value = value
 
     def __repr__(self):
+
         return str(self.value)
 
 
@@ -13,6 +14,7 @@ class VariableNode:
         self.name = name
 
     def __repr__(self):
+
         return self.name
 
 
@@ -23,6 +25,7 @@ class AssignNode:
         self.value = value
 
     def __repr__(self):
+
         return f"({self.name} = {self.value})"
 
 
@@ -32,7 +35,50 @@ class PrintNode:
         self.value = value
 
     def __repr__(self):
+
         return f"print({self.value})"
+
+
+class IfNode:
+
+    def __init__(self, condition, expr):
+        self.condition = condition
+        self.expr = expr
+
+    def __repr__(self):
+
+        return (
+            f"(if {self.condition} "
+            f"then {self.expr})"
+        )
+
+
+class WhileNode:
+
+    def __init__(self, count, expr):
+        self.count = count
+        self.expr = expr
+
+    def __repr__(self):
+
+        return (
+            f"(while {self.count} "
+            f"do {self.expr})"
+        )
+
+
+class ArrayNode:
+
+    def __init__(self, name, elements):
+        self.name = name
+        self.elements = elements
+
+    def __repr__(self):
+
+        return (
+            f"(array {self.name} = "
+            f"{self.elements})"
+        )
 
 
 class BinOpNode:
@@ -43,4 +89,9 @@ class BinOpNode:
         self.right = right
 
     def __repr__(self):
-        return f"({self.left} {self.op.literal} {self.right})"
+
+        return (
+            f"({self.left} "
+            f"{self.op.literal} "
+            f"{self.right})" 
+        )

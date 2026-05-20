@@ -10,34 +10,71 @@ class Parser:
 
         self.current_token = self.lexer.next_token()
 
+        self.peek_token = self.lexer.next_token()
+
+    # =========================
+    # ERROR
+    # =========================
+
+    def error(self, msg):
+
+        raise Exception(
+            f"Parser Error: {msg}"
+        )
+
+    # =========================
+    # ADVANCE
+    # =========================
+
+    def advance(self):
+
+        self.current_token = self.peek_token
+
+        self.peek_token = self.lexer.next_token()
+
+    # =========================
+    # EAT
+    # =========================
+
     def eat(self, token_type):
 
         if self.current_token.type == token_type:
 
-            self.current_token = self.lexer.next_token()
+            self.advance()
 
         else:
 
-            raise Exception(
-                f"Unexpected token {self.current_token.type}"
+            self.error(
+                f"Expected {token_type} "
+                f"but got {self.current_token.type}"
             )
+
+    # =========================
+    # FACTOR
+    # =========================
 
     def factor(self):
 
         token = self.current_token
 
-        if token.type in (TokenType.INT, TokenType.FLOAT):
+        # NUMBER
+        if token.type in (
+            TokenType.INT,
+            TokenType.FLOAT
+        ):
 
             self.eat(token.type)
 
             return NumberNode(token.literal)
 
+        # VARIABLE
         elif token.type == TokenType.IDENTIFIER:
 
             self.eat(TokenType.IDENTIFIER)
 
             return VariableNode(token.literal)
 
+        # PARENTHESES
         elif token.type == TokenType.LPAREN:
 
             self.eat(TokenType.LPAREN)
@@ -47,6 +84,12 @@ class Parser:
             self.eat(TokenType.RPAREN)
 
             return node
+
+        self.error("Invalid factor")
+
+    # =========================
+    # POWER
+    # =========================
 
     def power(self):
 
@@ -58,9 +101,17 @@ class Parser:
 
             self.eat(TokenType.POW)
 
-            node = BinOpNode(node, op, self.factor())
+            node = BinOpNode(
+                node,
+                op,
+                self.factor()
+            )
 
         return node
+
+    # =========================
+    # TERM
+    # =========================
 
     def term(self):
 
@@ -76,9 +127,17 @@ class Parser:
 
             self.eat(op.type)
 
-            node = BinOpNode(node, op, self.power())
+            node = BinOpNode(
+                node,
+                op,
+                self.power()
+            )
 
         return node
+
+    # =========================
+    # EXPRESSION
+    # =========================
 
     def expr(self):
 
@@ -93,62 +152,166 @@ class Parser:
 
             self.eat(op.type)
 
-            node = BinOpNode(node, op, self.term())
+            node = BinOpNode(
+                node,
+                op,
+                self.term()
+            )
 
         return node
 
-    def statement(self):
+    # =========================
+    # PRINT
+    # =========================
 
-        # print(...)
-        if self.current_token.type == TokenType.PRINT:
+    def print_statement(self):
 
-            self.eat(TokenType.PRINT)
+        self.eat(TokenType.PRINT)
 
-            self.eat(TokenType.LPAREN)
+        self.eat(TokenType.LPAREN)
 
-            value = self.expr()
+        value = self.expr()
 
-            self.eat(TokenType.RPAREN)
+        self.eat(TokenType.RPAREN)
 
-            return PrintNode(value)
+        return PrintNode(value)
 
-        # assignment
-        if self.current_token.type == TokenType.IDENTIFIER:
+    # =========================
+    # IF
+    # =========================
 
-            name = self.current_token.literal
+    def if_statement(self):
 
-            self.eat(TokenType.IDENTIFIER)
+        self.eat(TokenType.IF)
 
-            if self.current_token.type == TokenType.EQUAL:
+        condition = self.expr()
 
-                self.eat(TokenType.EQUAL)
+        self.eat(TokenType.THEN)
 
-                value = self.expr()
+        stmt = self.statement()
 
-                return AssignNode(name, value)
+        return IfNode(condition, stmt)
+
+    # =========================
+    # WHILE
+    # =========================
+
+    def while_statement(self):
+
+        self.eat(TokenType.WHILE)
+
+        count = self.expr()
+
+        self.eat(TokenType.DO)
+
+        stmt = self.statement()
+
+        return WhileNode(count, stmt)
+
+    # =========================
+    # ARRAY
+    # =========================
+
+    def array_statement(self):
+
+        self.eat(TokenType.ARRAY)
+
+        name = self.current_token.literal
+
+        self.eat(TokenType.IDENTIFIER)
+
+        self.eat(TokenType.EQUAL)
+
+        self.eat(TokenType.LBRACKET)
+
+        elements = []
+
+        if self.current_token.type == TokenType.RBRACKET:
+
+            self.eat(TokenType.RBRACKET)
+
+            return ArrayNode(name, elements)
+
+        while True:
+
+            elements.append(
+                self.expr()
+            )
+
+            if self.current_token.type == TokenType.COMMA:
+
+                self.eat(TokenType.COMMA)
+
+            elif self.current_token.type == TokenType.RBRACKET:
+
+                break
 
             else:
 
-                node = VariableNode(name)
+                self.error(
+                    "Expected ',' or ']' in array."
+                )
 
-                while self.current_token.type in (
-                    TokenType.PLUS,
-                    TokenType.MINUS,
-                    TokenType.ASTERIK,
-                    TokenType.SLASH,
-                    TokenType.MODULUS,
-                    TokenType.POW
-                ):
+        self.eat(TokenType.RBRACKET)
 
-                    op = self.current_token
+        return ArrayNode(name, elements)
 
-                    self.eat(op.type)
+    # =========================
+    # ASSIGNMENT
+    # =========================
 
-                    node = BinOpNode(node, op, self.expr())
+    def assignment(self):
 
-                return node
+        name = self.current_token.literal
 
+        self.eat(TokenType.IDENTIFIER)
+
+        self.eat(TokenType.EQUAL)
+
+        value = self.expr()
+
+        return AssignNode(name, value)
+
+    # =========================
+    # STATEMENT
+    # =========================
+
+    def statement(self):
+
+        # PRINT
+        if self.current_token.type == TokenType.PRINT:
+
+            return self.print_statement()
+
+        # IF
+        elif self.current_token.type == TokenType.IF:
+
+            return self.if_statement()
+
+        # WHILE
+        elif self.current_token.type == TokenType.WHILE:
+
+            return self.while_statement()
+
+        # ARRAY
+        elif self.current_token.type == TokenType.ARRAY:
+
+            return self.array_statement()
+
+        # ASSIGNMENT
+        elif (
+            self.current_token.type == TokenType.IDENTIFIER
+            and self.peek_token.type == TokenType.EQUAL
+        ):
+
+            return self.assignment()
+
+        # NORMAL EXPRESSION
         return self.expr()
+
+    # =========================
+    # PARSE
+    # =========================
 
     def parse(self):
 

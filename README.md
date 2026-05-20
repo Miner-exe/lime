@@ -31,8 +31,6 @@ The project follows the standard compiler phases:
 7. Assembly Generation
 8. Interpretation / Execution
 
-Based on compiler lecture structure and phases. :contentReference[oaicite:0]{index=0}
-
 ---
 
 # Project Structure
@@ -80,7 +78,7 @@ INT(20)
 ;
 ```
 
-The lexer implementation supports:
+The lexer supports:
 
 - Integers
 - Floats
@@ -88,12 +86,6 @@ The lexer implementation supports:
 - Operators
 - Keywords
 - Arrays
-
-Implemented in `Lexer.py`. :contentReference[oaicite:1]{index=1}
-
-Token definitions are implemented in `Token_class.py`. :contentReference[oaicite:2]{index=2}
-
-Compiler theory for lexical analysis and finite automata is based on lecture material. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}
 
 ---
 
@@ -117,10 +109,6 @@ PrintNode(
 )
 ```
 
-Implemented in `Parser.py`. :contentReference[oaicite:5]{index=5}
-
-Parser concepts are based on Context-Free Grammar (CFG) and parsing lectures. :contentReference[oaicite:6]{index=6}
-
 ---
 
 ## 3. Semantic Analysis
@@ -138,10 +126,6 @@ Output:
 ```text
 Semantic Error: z is undefined.
 ```
-
-Implemented in `Interpreter.py`. :contentReference[oaicite:7]{index=7}
-
-Semantic analysis concepts are based on compiler semantic checking lectures. :contentReference[oaicite:8]{index=8}
 
 ---
 
@@ -161,8 +145,6 @@ Generated TAC:
 t1 = 5 + 5
 x = t1
 ```
-
-Implemented in `TAC.py`. :contentReference[oaicite:9]{index=9}
 
 ---
 
@@ -184,8 +166,6 @@ After optimization:
 t1 = 10
 ```
 
-Implemented in `Optimizer.py`. :contentReference[oaicite:10]{index=10}
-
 ---
 
 ## 6. Register Allocation
@@ -199,8 +179,6 @@ t1 = y * 2    [R1]
 t2 = x + t1   [R2]
 ```
 
-Implemented in `RegisterAllocator.py`. :contentReference[oaicite:11]{index=11}
-
 ---
 
 ## 7. Assembly Generation
@@ -213,8 +191,6 @@ Example:
 ADD t1, 5, 5
 MOV x, t1
 ```
-
-Implemented in `AssemblyGenerator.py`. 
 
 ---
 
@@ -230,8 +206,6 @@ The compiler uses AST nodes such as:
 - WhileNode
 - ArrayNode
 - BinOpNode
-
-Implemented in `AST.py`. 
 
 ---
 
@@ -701,6 +675,14 @@ cd lime-compiler
 python main.py
 ```
 
+---
+
+# Technologies Used
+
+- Python 3
+- Recursive Descent Parsing
+- AST Interpretation
+- Three Address Code Generation
 
 ---
 
@@ -712,3 +694,10 @@ python main.py
 - Loay Amgad
 - Pierre Gendy
 - Ahmed Sayed
+
+---
+
+# Course
+
+Compiler Design Project  
+Faculty of Computer Science

@@ -1,6 +1,6 @@
 # KOR Compiler
 
-A mini compiler/interpreter project built using Python for Compiler Design coursework.
+A mini compiler/interpreter project built using Python for Compiler Design coursework.fL
 
 The compiler supports:
 
@@ -663,8 +663,8 @@ OUT t2
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/Miner-exe/lime.git
-cd lime
+git clone https://github.com/Miner-exe/KOR.git
+cd KOR
 ```
 
 ---
